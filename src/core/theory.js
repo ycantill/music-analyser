@@ -40,9 +40,21 @@ const getFrequencyBySemitones = (frequency, semitones) => {
   return getFrequencyByExponent(frequency, semitones / 12)
 }
 
+const getClosestFrequency = (frequencyPlayed, frequencies, MAX_FREQUENCY) =>  frequencies.reduce((closest, frequency) => {
+    const currentDiff = Math.abs(frequencyPlayed - frequency);
+    const lastDiff = Math.abs(frequencyPlayed - closest);
+
+    if (currentDiff < lastDiff) {
+      return frequency;
+    }
+
+    return closest;
+  }, MAX_FREQUENCY)
+
 export {
   getFrequencyBySemitones,
   getFrequencyFromMidiNote,
   getFrequencyByOctaves,
-  parseNote
+  parseNote,
+  getClosestFrequency
 }
