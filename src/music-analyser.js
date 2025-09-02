@@ -111,7 +111,7 @@ class MusicAnalyser extends LitElement {
     this._notes = this._notes.map((note) => ({ ...note, tone: false, scale: false, interval: undefined }));
   }
 
-  render() {
+  _renderGuitarInstrument() {
     return html`
       <guitar-instrument 
         .tunning="${this._tunning}" 
@@ -125,6 +125,10 @@ class MusicAnalyser extends LitElement {
         @guitar-instrument-on-click-scale="${this._removeScale}"
         >
       </guitar-instrument>`;
+  }
+
+  render() {
+    return this._renderGuitarInstrument();
   }
 }
 
