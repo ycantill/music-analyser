@@ -98,13 +98,23 @@ export default function MusicAnalyser() {
   }, []);
 
   return (
-    <GuitarInstrument
-      tunning={TUNNING}
-      notes={notes}
-      onClickNote={handleClickNote}
-      onClickTone={handleResetTones}
-      onClickInterval={handleSetScale}
-      onClickScale={handleRemoveScale}
-    />
+    <>
+      <div className="rotate-hint" aria-hidden="true">
+        <span>🔄</span> Gira el dispositivo para una mejor experiencia
+      </div>
+      <header className="fretboard-header">
+        <h1>Conoce los intervalos en la guitarra</h1>
+        <p className="subtitle-default">Haz click en alguna cuerda y explora</p>
+        <p className="subtitle-scroll">Arrastra el diapasón, haz click en alguna cuerda y explora</p>
+      </header>
+      <GuitarInstrument
+        tunning={TUNNING}
+        notes={notes}
+        onClickNote={handleClickNote}
+        onClickTone={handleResetTones}
+        onClickInterval={handleSetScale}
+        onClickScale={handleRemoveScale}
+      />
+    </>
   );
 }

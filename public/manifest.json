@@ -1,0 +1,17 @@
+{
+  "name": "Analizador Musical",
+  "short_name": "Analizador Musical",
+  "description": "Mástil de guitarra interactivo para análisis de teoría musical",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ededed",
+  "theme_color": "#ededed",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,8 +1,16 @@
+/* Fretboard scroll wrapper */
+.fretboard-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
 /* Fretboard container */
 .fretboard {
+  width: max-content;
   margin: 10px 0px 30px 30px;
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(13, 70px);
   grid-template-rows: repeat(6, 30px);
   position: relative;
 }
@@ -14,7 +22,7 @@
   position: absolute;
   background-color: navajowhite;
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(13, 70px);
 }
 
 .fretboard .background .nut {
@@ -32,7 +40,7 @@
   height: 100%;
   position: absolute;
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(13, 70px);
   background: transparent;
 }
 
@@ -59,7 +67,7 @@
   height: 100%;
   position: absolute;
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(13, 70px);
   grid-template-rows: repeat(3, 1fr);
 }
 
@@ -148,7 +156,7 @@
   height: 100%;
   position: absolute;
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(13, 70px);
   grid-template-rows: repeat(6, 1fr);
 }
 
@@ -208,4 +216,23 @@
 .fretboard .interval:hover .name {
   opacity: 1;
   cursor: pointer;
+}
+
+/* Desktop: fretboard fits without scrolling */
+@media (min-width: 960px) {
+  .fretboard-scroll {
+    overflow-x: visible;
+  }
+
+  .fretboard {
+    width: 100%;
+    grid-template-columns: repeat(13, 1fr);
+  }
+
+  .fretboard .background,
+  .fretboard .frets,
+  .fretboard .markers,
+  .fretboard .notes {
+    grid-template-columns: repeat(13, 1fr);
+  }
 }
