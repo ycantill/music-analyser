@@ -1,0 +1,211 @@
+/* Fretboard container */
+.fretboard {
+  margin: 10px 0px 30px 30px;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(6, 30px);
+  position: relative;
+}
+
+/* Background layer */
+.fretboard .background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: navajowhite;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+}
+
+.fretboard .background .nut {
+  background-color: white;
+}
+
+.fretboard .background .bg-frets {
+  grid-column-start: 2;
+}
+
+/* Frets layer */
+.fretboard .frets {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  background: transparent;
+}
+
+.fretboard .frets .fret {
+  border-right: 6px silver solid;
+  position: relative;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: 100%;
+  display: grid;
+}
+
+.fretboard .frets .fret .name {
+  position: absolute;
+  bottom: -20px;
+  text-align: center;
+  width: 100%;
+  font-size: 12px;
+}
+
+/* Markers layer */
+.fretboard .markers {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.fretboard .marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fretboard .marker .dot {
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.fretboard .marker.center.fret-3 {
+  grid-column-start: 4;
+  grid-row-start: 2;
+}
+
+.fretboard .marker.center.fret-5 {
+  grid-column-start: 6;
+  grid-row-start: 2;
+}
+
+.fretboard .marker.center.fret-7 {
+  grid-column-start: 8;
+  grid-row-start: 2;
+}
+
+.fretboard .marker.center.fret-9 {
+  grid-column-start: 10;
+  grid-row-start: 2;
+}
+
+.fretboard .marker.top.fret-12 {
+  grid-column-start: 13;
+  grid-row-start: 1;
+  align-items: flex-end;
+  padding-bottom: 5px;
+}
+
+.fretboard .marker.bottom.fret-12 {
+  grid-column-start: 13;
+  grid-row-start: 3;
+  align-items: flex-start;
+  padding-top: 5px;
+}
+
+/* Strings layer */
+.fretboard .strings {
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: repeat(6, 1fr);
+  padding-top: 13px;
+  background: transparent;
+}
+
+.fretboard .string {
+  width: 100%;
+  background-color: silver;
+  height: 2px;
+  position: relative;
+}
+
+.fretboard .string .name {
+  position: absolute;
+  left: -22px;
+  top: -7px;
+  font-size: 12px;
+}
+
+.fretboard .string .name:hover {
+  cursor: pointer;
+}
+
+/* Notes layer */
+.fretboard .notes {
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.fretboard .note,
+.fretboard .interval {
+  position: relative;
+}
+
+.fretboard .note .name,
+.fretboard .interval .name {
+  position: absolute;
+  left: 5px;
+  background-color: whitesmoke;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+  border: solid 1px black;
+  width: auto;
+  opacity: 0;
+}
+
+.fretboard .tone {
+  position: relative;
+}
+
+.fretboard .tone .name {
+  position: absolute;
+  left: 5px;
+  background-color: orangered;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+  border: solid 1px black;
+  width: auto;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.fretboard .scale {
+  position: relative;
+}
+
+.fretboard .scale .name {
+  position: absolute;
+  left: 5px;
+  background-color: cornflowerblue;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+  border: solid 1px black;
+  width: auto;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.fretboard .note:hover .name,
+.fretboard .interval:hover .name {
+  opacity: 1;
+  cursor: pointer;
+}
