@@ -4,4 +4,112 @@ body {
   padding: 0;
   font-family: sans-serif;
   background-color: #ededed;
+  overflow-x: hidden;
+}
+
+.references {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.references h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.references ol {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.references li {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.references a {
+  color: #666;
+  word-break: break-all;
+}
+
+.fretboard-header {
+  padding: 24px 20px 8px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.fretboard-header h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+}
+
+.fretboard-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.fretboard-header .subtitle-scroll {
+  display: none;
+}
+
+.rotate-hint {
+  display: none;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .rotate-hint {
+    display: block;
+  }
+}
+
+@media (max-width: 959px) {
+  .fretboard-header .subtitle-default {
+    display: none;
+  }
+
+  .fretboard-header .subtitle-scroll {
+    display: block;
+  }
+}
+
+.app-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.share-button:hover {
+  background-color: #e0e0e0;
 }

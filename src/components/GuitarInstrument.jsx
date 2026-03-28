@@ -61,6 +61,7 @@ export default function GuitarInstrument({
   onClickScale,
 }) {
   return (
+    <div className="fretboard-scroll">
     <div className="fretboard">
       {/* Background */}
       <div className="background">
@@ -127,6 +128,7 @@ export default function GuitarInstrument({
           />
         ))}
       </div>
+    </div>
     </div>
   );
 }
