@@ -31,14 +31,13 @@ export default function ShareButton() {
       const canShare = navigator.canShare?.({ files: [new File([], 'test.png', { type: 'image/png' })] });
 
       if (canShare) {
-        canvas.toBlob(async (blob) => {
-          const file = new File([blob], 'intervalos.png', { type: 'image/png' });
-          await navigator.share({
-            title: 'Analizador Musical',
-            text: 'Mis intervalos en la guitarra',
-            files: [file],
-          });
-        }, 'image/png');
+        const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+        const file = new File([blob], 'intervalos.png', { type: 'image/png' });
+        await navigator.share({
+          title: 'Analizador Musical',
+          text: 'Mis intervalos en la guitarra',
+          files: [file],
+        });
       } else {
         await navigator.share({
           title: 'Analizador Musical',
