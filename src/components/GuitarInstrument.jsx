@@ -14,10 +14,13 @@ function getFretMarker(fretIndex) {
   return MARKERS.find((marker) => marker.fret + 1 === fret) || {};
 }
 
-function NoteByType({ note, onClickNote, onClickTone, onClickInterval, onClickScale }) {
+function NoteByType({ note, chord, onClickNote, onClickTone, onClickInterval, onClickScale }) {
+  const inChord = chord.some((n) => n.name === note.name && n.octave === note.octave);
+  const dimmed = !inChord;
+
   if (note.tone) {
     return (
-      <div className="tone" onClick={() => onClickTone(note)}>
+      <div className="tone" style={dimmed ? { opacity: 0.5 } : undefined} onClick={() => onClickTone(note)}>
         <div className="name">
           {note.name} {note.interval?.name}
         </div>
@@ -28,7 +31,7 @@ function NoteByType({ note, onClickNote, onClickTone, onClickInterval, onClickSc
   if (note.interval) {
     if (note.scale) {
       return (
-        <div className="scale" onClick={() => onClickScale(note)}>
+        <div className="scale" style={dimmed ? { opacity: 0.5 } : undefined} onClick={() => onClickScale(note)}>
           <div className="name">
             {note.name} {note.interval.name}
           </div>
@@ -55,13 +58,20 @@ function NoteByType({ note, onClickNote, onClickTone, onClickInterval, onClickSc
 export default function GuitarInstrument({
   tunning = [],
   notes = [],
+  chord = [],
+  chordName = null,
   onClickNote,
   onClickTone,
   onClickInterval,
   onClickScale,
 }) {
   return (
-    <div className="fretboard-scroll">
+    <div id="fretboard-region" className="fretboard-scroll">
+    {chordName && (
+      <div className="fretboard-chord-overlay">
+        <span className="chord-badge">{chordName}</span>
+      </div>
+    )}
     <div className="fretboard">
       {/* Background */}
       <div className="background">
@@ -121,6 +131,7 @@ export default function GuitarInstrument({
           <NoteByType
             key={index}
             note={note}
+            chord={chord}
             onClickNote={onClickNote}
             onClickTone={onClickTone}
             onClickInterval={onClickInterval}

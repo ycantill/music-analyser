@@ -59,6 +59,25 @@ body {
   color: #777;
 }
 
+.chord-detected {
+  margin-top: 10px;
+}
+
+.chord-badge {
+  display: inline-block;
+  background-color: #222;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 4px 16px;
+  border-radius: 6px;
+}
+
+.fretboard-chord-overlay {
+  padding: 8px 12px 0;
+}
+
 .fretboard-header .subtitle-scroll {
   display: none;
 }
@@ -91,6 +110,7 @@ body {
 .app-toolbar {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
   padding: 0 20px;
   max-width: 800px;
   margin: 0 auto;
@@ -112,4 +132,34 @@ body {
 
 .share-button:hover {
   background-color: #e0e0e0;
+}
+
+.app-header-wrap {
+  position: relative;
+}
+
+.github-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #ededed;
+  fill: #333;
+}
+
+.github-corner svg {
+  display: block;
+}
+
+.github-corner .octo-arm {
+  transform-origin: 130px 106px;
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+  0%, 100% { transform: rotate(0); }
+  20%, 60% { transform: rotate(-25deg); }
+  40%, 80% { transform: rotate(10deg); }
 }
