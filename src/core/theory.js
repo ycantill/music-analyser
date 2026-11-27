@@ -1,4 +1,4 @@
-/* eslint-disable prefer-regex-literals */
+ 
 import { A4 } from '../constants.js';
 
 // TODO: REFACTOR
@@ -15,7 +15,7 @@ const parseNote = (stringNote) => {
     return {
       name: name.toUpperCase(),
       accidental,
-      // eslint-disable-next-line radix
+       
       ...(octave && { octave: parseInt(octave) }),
     };
   }

@@ -19,10 +19,11 @@ const CameraIcon = () => (
 );
 
 export default function ShareButton() {
-  if (!navigator.share) return null;
-
+  // Los hooks van antes de cualquier return: React necesita el mismo orden en cada render.
   const [loading, setLoading] = useState(false);
   const [capturedBlob, setCapturedBlob] = useState(null);
+
+  if (!navigator.share) return null;
 
   async function handleCapture() {
     setLoading(true);
