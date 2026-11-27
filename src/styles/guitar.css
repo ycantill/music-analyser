@@ -248,7 +248,8 @@
   }
 
   .fretboard {
-    width: 100%;
+    /* El margen izquierdo deja lugar a los nombres de las cuerdas: sin restarlo, el traste 12 se salía. */
+    width: calc(100% - 50px);
     grid-template-columns: repeat(13, 1fr);
   }
 
