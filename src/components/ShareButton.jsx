@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import html2canvas from 'html2canvas';
 
 const ShareIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -32,6 +31,8 @@ export default function ShareButton() {
       const prevOverflow = region.style.overflow;
       region.style.overflow = 'visible';
 
+      // html2canvas solo se carga cuando la persona pide la captura.
+      const { default: html2canvas } = await import('html2canvas');
       const canvas = await html2canvas(region, {
         backgroundColor: '#ededed',
         scale: 2,

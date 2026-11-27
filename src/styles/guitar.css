@@ -150,7 +150,7 @@
   cursor: pointer;
 }
 
-/* Notes layer */
+/* Notes layer: cada nota es un botón (se puede usar con teclado y lector de pantalla). */
 .fretboard .notes {
   z-index: 4;
   width: 100%;
@@ -161,70 +161,84 @@
   grid-template-rows: repeat(6, 1fr);
 }
 
-.fretboard .note,
-.fretboard .interval {
+.fretboard .notes button {
   position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.fretboard .note .name,
-.fretboard .interval .name {
+.fretboard .notes button .name {
   position: absolute;
+  /* Arriba de la celda, como cuando eran div: un botón centra su contenido. */
+  top: 0;
   left: 5px;
-  background-color: whitesmoke;
   padding: 5px 7px;
   font-size: 12px;
   font-weight: 700;
   border-radius: 3px;
   border: 2px solid #aaa;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-  width: auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+/* Las notas sin papel y los intervalos posibles aparecen al pasar el mouse o con el foco del teclado. */
+.fretboard .note .name,
+.fretboard .interval .name {
+  background-color: whitesmoke;
+  color: #213547;
   opacity: 0;
 }
 
-.fretboard .tone {
-  position: relative;
-}
-
-.fretboard .tone .name {
-  position: absolute;
-  left: 5px;
-  background-color: #2a9d5c;
-  color: #fff;
-  padding: 5px 7px;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 3px;
-  border: 2px solid #1a6e3f;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-  width: auto;
+.fretboard .note:hover .name,
+.fretboard .interval:hover .name,
+.fretboard .note:focus-visible .name,
+.fretboard .interval:focus-visible .name {
   opacity: 1;
-  cursor: pointer;
 }
 
-.fretboard .scale {
-  position: relative;
+/* Tónica (verde) y notas del acorde (azul). Colores con contraste de 5:1 o más con el texto blanco. */
+.fretboard .tone .name {
+  background-color: #1e7a47;
+  border-color: #14532d;
+  color: #fff;
 }
 
 .fretboard .scale .name {
-  position: absolute;
-  left: 5px;
-  background-color: cornflowerblue;
+  background-color: #2f5fb8;
+  border-color: #1e3a8a;
   color: #fff;
-  padding: 5px 7px;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 3px;
-  border: 2px solid #3a5fbf;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-  width: auto;
-  opacity: 1;
-  cursor: pointer;
 }
 
-.fretboard .note:hover .name,
-.fretboard .interval:hover .name {
-  opacity: 1;
-  cursor: pointer;
+/* En las otras posiciones del diapasón se atenúan con color, no con transparencia,
+   para que el texto se siga leyendo y los puntos del diapasón no se vean a través. */
+.fretboard .tone.dimmed .name {
+  background-color: #dcefe3;
+  border-color: #2a9d5c;
+  color: #14532d;
+  box-shadow: none;
+}
+
+.fretboard .scale.dimmed .name {
+  background-color: #dde7fa;
+  border-color: #6b8fd6;
+  color: #1e3a8a;
+  box-shadow: none;
+}
+
+.fretboard .notes button:focus-visible {
+  outline: none;
+}
+
+.fretboard .notes button:focus-visible .name {
+  outline: 3px solid #f5a623;
+  outline-offset: 2px;
 }
 
 /* Desktop: fretboard fits without scrolling */
