@@ -1,7 +1,6 @@
  
 import { A4 } from '../constants.js';
 
-// TODO: REFACTOR
 const parseNote = (stringNote) => {
   const regex = new RegExp(
     '(?<name>[A-G]{1})(?<accidental>#|b)*(?<alternative>\\/[A-G]b)*(?<octave>[0-9])*',
@@ -23,9 +22,6 @@ const parseNote = (stringNote) => {
 };
 
 const getFrequencyByExponent = (frequency, exponent) => frequency * 2 ** exponent;
-const getFrequencyFromMidiNote = (note) =>
-  getFrequencyByExponent(A4.frequency, (note - 69) / 12);
-
 const getFrequencyByOctaves = (frequency, octave) => {
   if (!Number.isInteger(octave)) {
     throw new Error('The octave must be a integer number.');
@@ -40,22 +36,8 @@ const getFrequencyBySemitones = (frequency, semitones) => {
   return getFrequencyByExponent(frequency, semitones / 12);
 };
 
-const getClosestFrequency = (frequencyPlayed, frequencies, MAX_FREQUENCY) =>
-  frequencies.reduce((closest, frequency) => {
-    const currentDiff = Math.abs(frequencyPlayed - frequency);
-    const lastDiff = Math.abs(frequencyPlayed - closest);
-
-    if (currentDiff < lastDiff) {
-      return frequency;
-    }
-
-    return closest;
-  }, MAX_FREQUENCY);
-
 export {
   getFrequencyBySemitones,
-  getFrequencyFromMidiNote,
   getFrequencyByOctaves,
   parseNote,
-  getClosestFrequency,
 };

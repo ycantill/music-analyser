@@ -56,7 +56,7 @@ function NoteByType({ note, chord, onClickNote, onClickTone, onClickInterval, on
 }
 
 export default function GuitarInstrument({
-  tunning = [],
+  tuning = [],
   notes = [],
   chord = [],
   chordName = null,
@@ -118,7 +118,7 @@ export default function GuitarInstrument({
 
       {/* Strings */}
       <div className="strings">
-        {tunning.map((string) => (
+        {tuning.map((string) => (
           <div key={string} className="string">
             <div className="name">{string}</div>
           </div>

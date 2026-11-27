@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Revisa cada PR y cada push: lint y build.
+  # Revisa cada PR y cada push: lint, pruebas y build.
   check:
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +22,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm test
       - name: Build para GitHub Pages
         env:
           GITHUB_REPO: ${{ github.event.repository.name }}
