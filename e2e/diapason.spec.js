@@ -70,3 +70,27 @@ test('la app instalada abre dentro de su carpeta en GitHub Pages', async ({ requ
   expect(manifest.scope).toBe('./');
   for (const icon of manifest.icons) expect(icon.src).not.toMatch(/^\//);
 });
+
+test('funciona sin internet después de la primera visita, incluido el sonido', async ({ page, context }) => {
+  await page.goto('/');
+  // Espera a que el service worker controle la página (ya guardó la app).
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise((r) => navigator.serviceWorker.addEventListener('controllerchange', r, { once: true }));
+    }
+  });
+
+  await context.setOffline(true);
+  await page.reload();
+  const errores = [];
+  page.on('pageerror', (e) => errores.push(e.message));
+
+  await nota(page, 'C3, cuerda 5, traste 3').click();
+  await nota(page, 'E3, cuerda 4, traste 2, tercera mayor').click();
+  await nota(page, 'G3, cuerda 3, al aire, quinta justa').click();
+  await expect(page.locator('.chord-badge')).toHaveText('Cmaj');
+  // El audio (Tone.js) se carga al tocar: sin internet también tiene que llegar del dispositivo.
+  await expect.poll(() => page.evaluate(() => performance.getEntriesByType('resource').some((r) => /\/assets\/esm-/.test(r.name)))).toBe(true);
+  expect(errores).toEqual([]);
+});
