@@ -1,9 +1,14 @@
 import { useRef, useCallback } from 'react';
-import * as Tone from 'tone';
 
 const POOL_SIZE = 8;
 
-function makePool() {
+// Tone.js pesa mucho y solo hace falta al tocar la primera nota: se carga
+// entonces. Además, el audio del navegador solo puede empezar después de que
+// la persona toca algo.
+let tonePromise;
+const loadTone = () => (tonePromise ??= import('tone'));
+
+function makePool(Tone) {
   const reverb = new Tone.Reverb({ decay: 1.5, wet: 0.25 }).toDestination();
   return Array.from({ length: POOL_SIZE }, () =>
     new Tone.Synth({
@@ -17,16 +22,13 @@ function makePool() {
 export function useGuitarSound() {
   const poolRef = useRef(null);
 
-  function getPool() {
-    if (!poolRef.current) poolRef.current = makePool();
-    return poolRef.current;
-  }
-
   // notes: array of { name, octave }
   const playChord = useCallback(async (notes) => {
     if (!notes.length) return;
+    const Tone = await loadTone();
     await Tone.start();
-    const pool = getPool();
+    poolRef.current ??= makePool(Tone);
+    const pool = poolRef.current;
     const now = Tone.now();
     notes.forEach(({ name, octave }, i) => {
       if (i < pool.length) {
