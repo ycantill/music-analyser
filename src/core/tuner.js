@@ -1,4 +1,4 @@
-/* eslint-disable radix */
+ 
 import { A4, NOTES_NAMES } from '../constants.js';
 import {
   getFrequencyByOctaves,

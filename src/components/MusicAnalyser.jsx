@@ -7,6 +7,8 @@ import { detectChord } from '../core/chords.js';
 import GuitarInstrument from './GuitarInstrument.jsx';
 
 const TUNNING = ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'];
+// Las notas alteradas se muestran con sostenido (C#), no con bemol (Db).
+const ALTERATION = 'sharp';
 
 function getNoteName(name, alteration) {
   const regex = /(?<sharp>[A-G]#)\/(?<flat>[A-G]b)|(?<plain>[A-G])/i;
@@ -50,8 +52,7 @@ function getInterval(noteFrequency, toneFrequency, minFrequency) {
 }
 
 export default function MusicAnalyser() {
-  const [alteration] = useState('sharp');
-  const [notes, setNotes] = useState(() => buildInitialNotes('sharp'));
+  const [notes, setNotes] = useState(() => buildInitialNotes(ALTERATION));
   const { playChord } = useGuitarSound();
   const [chord, setChord] = useState([]);
   const chordRef = useRef([]);
