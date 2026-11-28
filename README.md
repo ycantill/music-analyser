@@ -14,7 +14,7 @@ Entorno personal de aprendizaje (PLE) para explorar los **intervalos** y los
 **acordes** en el mástil de la guitarra: se ven, se oyen y se construyen nota
 por nota.
 
-**[Abrir la app →](https://ycantill.github.io/music-analyser/)** (funciona en el celular, mejor en horizontal)
+**[Abrir la app →](https://ycantill.github.io/music-analyser/)** (funciona en el celular, mejor en horizontal, y sin internet después de abrirla una vez)
 
 ![El diapasón con un acorde de La menor séptima: la tónica en verde, las notas del acorde en azul y su nombre, Am7, arriba](docs/screenshot.png)
 
@@ -25,6 +25,7 @@ por nota.
 - Al tocar más notas se arma un **acorde** (en azul). La app lo nombra (Am, C7, Dmaj9…) y lo hace sonar.
 - Las notas de la tónica y del acorde en otras posiciones del mástil quedan resaltadas en un tono claro, para ver el mismo patrón en todo el diapasón.
 - **Capturar diapasón** guarda una imagen para compartirla desde el celular.
+- **Funciona sin internet** después de la primera visita, sonido incluido. Se puede agregar a la pantalla de inicio del celular como una app.
 
 ## Propuesta pedagógica
 
@@ -75,6 +76,7 @@ revisa en cada cambio:
 - Se puede usar **solo con el teclado**: cada nota es un botón y el foco se ve.
 - Funciona con **lector de pantalla**: cada nota dice su nombre, su cuerda, su traste y su intervalo (por ejemplo, "E 3ra: E3, cuerda 4, traste 2, tercera mayor"), y el acorde se anuncia cuando cambia.
 - Los colores tienen **contraste suficiente** y la información no depende solo del color: cada nota también tiene su nombre escrito.
+- **Funciona sin conexión:** basta abrirla una vez con internet (por ejemplo, en casa o en el aula antes de la clase) para usarla después en un lugar con mala señal.
 
 ### Los intervalos
 
@@ -126,6 +128,6 @@ llega a `main` se publica en GitHub Pages.
 | Audio | [Tone.js](https://tonejs.github.io/): a pool of triangle-wave synths with reverb, so a whole chord sounds at once. Loaded on the first tap, which keeps the initial JavaScript at ~235 kB instead of ~775 kB. |
 | Music theory | Pure functions in `src/core`: equal-temperament frequencies from A4 = 440 Hz, the interval between any two notes, and chord detection by matching interval sets (octave doublings and order ignored). |
 | Accessibility | Every fret position is a `<button>` with an accessible name that starts with its visible label (WCAG 2.5.3), `aria-pressed` for selected notes, an `aria-live` region for the chord, visible focus and 5:1+ contrast. |
-| Testing | 21 unit tests (Vitest) for the theory core; 5 end-to-end tests (Playwright) that build a chord with the keyboard only, run axe-core (WCAG 2.2 AA) and check the PWA manifest. |
+| Testing | 21 unit tests (Vitest) for the theory core; 6 end-to-end tests (Playwright) that build a chord with the keyboard only, run axe-core (WCAG 2.2 AA), check the PWA manifest and **play a chord with the network off**. |
 | CI/CD | GitHub Actions: lint, tests, build and E2E on every pull request; deploy to GitHub Pages only from `main`. |
-| PWA | Installable, with a manifest that uses relative paths so it works under `/music-analyser/`. |
+| PWA | Installable and **offline-first**: a Workbox service worker (`vite-plugin-pwa`) precaches the whole build, including the lazily loaded Tone.js chunk, so sound works offline too. The manifest uses relative paths so it works under `/music-analyser/`. |
