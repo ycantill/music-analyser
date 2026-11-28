@@ -21,15 +21,24 @@ function makePool(Tone) {
 
 export function useGuitarSound() {
   const poolRef = useRef(null);
+  // Cada toque tiene un número: si se tocaron varias notas mientras el audio
+  // cargaba, solo suena el acorde más reciente.
+  const latestRef = useRef(0);
+  // Tone.js exige que cada inicio sea posterior al anterior en el mismo
+  // sintetizador; con toques muy seguidos el reloj del audio puede no avanzar.
+  const lastStartRef = useRef(0);
 
   // notes: array of { name, octave }
   const playChord = useCallback(async (notes) => {
     if (!notes.length) return;
+    const request = ++latestRef.current;
     const Tone = await loadTone();
     await Tone.start();
+    if (request !== latestRef.current) return;
     poolRef.current ??= makePool(Tone);
     const pool = poolRef.current;
-    const now = Tone.now();
+    const now = Math.max(Tone.now(), lastStartRef.current + 0.01);
+    lastStartRef.current = now;
     notes.forEach(({ name, octave }, i) => {
       if (i < pool.length) {
         pool[i].triggerAttackRelease(`${name}${octave}`, '2n', now);

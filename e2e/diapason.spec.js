@@ -94,3 +94,20 @@ test('funciona sin internet después de la primera visita, incluido el sonido', 
   await expect.poll(() => page.evaluate(() => performance.getEntriesByType('resource').some((r) => /\/assets\/esm-/.test(r.name)))).toBe(true);
   expect(errores).toEqual([]);
 });
+
+test('con señal lenta, tocar varias notas mientras carga el audio no da errores', async ({ page }) => {
+  const errores = [];
+  page.on('pageerror', (e) => errores.push(e.message));
+  // Tone.js tarda en llegar, como con mala señal.
+  await page.route('**/assets/esm-*.js', async (route) => {
+    await new Promise((r) => setTimeout(r, 800));
+    await route.continue();
+  });
+  await page.goto('/');
+  await nota(page, 'C3, cuerda 5, traste 3').click();
+  await nota(page, 'E3, cuerda 4, traste 2, tercera mayor').click();
+  await nota(page, 'G3, cuerda 3, al aire, quinta justa').click();
+  await expect(page.locator('.chord-badge')).toHaveText('Cmaj');
+  await page.waitForTimeout(1500);
+  expect(errores).toEqual([]);
+});
