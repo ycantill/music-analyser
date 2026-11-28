@@ -1,12 +1,12 @@
 import { useState, useCallback, useMemo, useRef } from 'react';
 import { tune } from '../core/tuner.js';
 import { Note } from '../core/classes.js';
-import { INTERVALS } from '../constants.js';
 import { useGuitarSound } from '../core/useGuitarSound.js';
 import { detectChord } from '../core/chords.js';
+import { getInterval } from '../core/intervals.js';
 import GuitarInstrument from './GuitarInstrument.jsx';
 
-const TUNNING = ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'];
+const TUNING = ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'];
 // Las notas alteradas se muestran con sostenido (C#), no con bemol (Db).
 const ALTERATION = 'sharp';
 
@@ -17,7 +17,7 @@ function getNoteName(name, alteration) {
 }
 
 function buildInitialNotes(alteration) {
-  return TUNNING.reduce((allNotes, string) => {
+  return TUNING.reduce((allNotes, string) => {
     const stringNotes = [...tune(string).values()].map(
       (note) =>
         new Note({
@@ -30,27 +30,6 @@ function buildInitialNotes(alteration) {
   }, []);
 }
 
-function getSemitones(frequencyA, frequencyB) {
-  return Math.round(12 * (Math.log(frequencyB / frequencyA) / Math.log(2)));
-}
-
-function getLowestToneFrequency(toneFrequency, minFrequency) {
-  let lowest = toneFrequency;
-  while (lowest > minFrequency) {
-    lowest /= 2;
-  }
-  return lowest;
-}
-
-function getInterval(noteFrequency, toneFrequency, minFrequency) {
-  const lowestToneFrequency = getLowestToneFrequency(toneFrequency, minFrequency);
-  const semitones = getSemitones(lowestToneFrequency, noteFrequency);
-  const isOctave = toneFrequency !== noteFrequency && semitones % 12 === 0;
-  return INTERVALS.find(
-    (interval) => interval.semitones === (isOctave ? 12 : semitones % 12)
-  );
-}
-
 export default function MusicAnalyser() {
   const [notes, setNotes] = useState(() => buildInitialNotes(ALTERATION));
   const { playChord } = useGuitarSound();
@@ -60,7 +39,7 @@ export default function MusicAnalyser() {
   const minFrequency = useMemo(() => {
     const freqs = notes.map((n) => n.frequency).sort((a, b) => a - b);
     return freqs[0];
-    // Intentionally computed once on mount — tunning never changes
+    // Intentionally computed once on mount — tuning never changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -160,7 +139,7 @@ export default function MusicAnalyser() {
         </div>
       ) : null}
       <GuitarInstrument
-        tunning={TUNNING}
+        tuning={TUNING}
         notes={notes}
         chord={chord}
         chordName={chordName}
